@@ -10,6 +10,10 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text("Dashboard"),
+      ),
       body: Center(
         child: SizedBox(
             height: 200,

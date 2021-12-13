@@ -1,10 +1,12 @@
 import 'dart:developer';
+import 'package:mysmartdesk/authentication/logic/cubit/firebase_auth_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
-import 'package:mysmartdesk/authentication/logic/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -16,74 +18,85 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  validate() async {
-    if (formkey.currentState!.validate()) {
-      final d =
-          await FirebaseAuthentication().signin("test2@santa.com", "987654");
-      Fluttertoast.showToast(msg: d.toString(), gravity: ToastGravity.TOP);
-      if (d == "okay") {
-        context.router.push(const DashboardRoute());
-      }
-    } else {}
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(50),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 100),
-                child: SizedBox(
-                  height: 80,
-                  child: SvgPicture.asset('assets/images/logo.svg'),
+      body: BlocListener<FirebaseAuthCubit, FirebaseAuthState>(
+        listener: (context, state) {
+          switch (state.status) {
+            case UserStatus.initial:
+              EasyLoading.show(status: 'loading...');
+              break;
+            case UserStatus.loading:
+              EasyLoading.show(status: 'loading...');
+              break;
+
+            case UserStatus.loaded:
+              context.router.push(const DashboardRoute());
+              break;
+
+            case UserStatus.error:
+          }
+        },
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(50),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 100),
+                  child: SizedBox(
+                    height: 80,
+                    child: SvgPicture.asset('assets/images/logo.svg'),
+                  ),
                 ),
-              ),
-              Form(
-                key: formkey,
-                child: Column(
-                  children: [
-                    email("email"),
-                    password("password"),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                    style: ButtonStyle(
-                        padding: MaterialStateProperty.all(
-                            const EdgeInsets.symmetric(horizontal: 50)),
-                        backgroundColor:
-                            MaterialStateProperty.all(const Color(0xffFB297B))),
-                    onPressed: () {
-                      validate();
-                      // context.router.push(const DashboardRoute());
-                    },
-                    child: const Text("LOGIN",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ))),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 150),
-                child: RichText(
-                  text: const TextSpan(
+                Form(
+                  key: formkey,
+                  child: Column(
                     children: [
-                      TextSpan(text: "click here to"),
-                      TextSpan(
-                          text: " sign up",
-                          style: TextStyle(color: kPrimaryColor))
+                      email("email"),
+                      password("password"),
                     ],
                   ),
                 ),
-              )
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                              const EdgeInsets.symmetric(horizontal: 50)),
+                          backgroundColor: MaterialStateProperty.all(
+                              const Color(0xffFB297B))),
+                      onPressed: () async {
+                        EasyLoading.show(status: "Loading");
+                        // await context
+                        //     .read<FirebaseAuthCubit>()
+                        //     .signin("test2@santa.com", "987654");
+
+                        // context.router.push(const DashboardRoute());
+                      },
+                      child: const Text("LOGIN",
+                          style: TextStyle(
+                            color: Colors.white,
+                          ))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 150),
+                  child: RichText(
+                    text: const TextSpan(
+                      children: [
+                        TextSpan(text: "click here to"),
+                        TextSpan(
+                            text: " sign up",
+                            style: TextStyle(color: kPrimaryColor))
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
