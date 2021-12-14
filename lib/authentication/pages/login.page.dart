@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 100),
                   child: SizedBox(
-                    height: 80,
+                    height: 81,
                     child: SvgPicture.asset('assets/images/logo.svg'),
                   ),
                 ),
