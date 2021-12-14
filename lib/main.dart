@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -6,16 +7,12 @@ import 'app/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  easyLoadingSetup();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  easyLoadingSetup();
+  runApp(MyApp(auth: FirebaseAuth.instance));
 }
 
 easyLoadingSetup() {
-  Book.instance
-    ..name()
-    ..santa();
-
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 2000)
     ..backgroundColor = Colors.white
@@ -24,13 +21,13 @@ easyLoadingSetup() {
     ..userInteractions = false;
 }
 
-class Book {
-  static const _instance = Book._();
+// class Book {
+//   static const _instance = Book._();
 
-  static Book get instance => _instance;
+//   static Book get instance => _instance;
 
-  void name() {}
-  void santa() {}
+//   void name() {}
+//   void santa() {}
 
-  const Book._();
-}
+//   const Book._();
+// }

@@ -1,6 +1,8 @@
 import 'dart:developer';
-import 'package:mysmartdesk/authentication/logic/cubit/firebase_auth_cubit.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
+
 import '../../router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -26,17 +28,20 @@ class _LoginPageState extends State<LoginPage> {
         listener: (context, state) {
           switch (state.status) {
             case UserStatus.initial:
-              EasyLoading.show(status: 'loading...');
+              EasyLoading.show(status: 'Signing...');
               break;
             case UserStatus.loading:
-              EasyLoading.show(status: 'loading...');
+              EasyLoading.show(status: 'PLease wait');
               break;
 
             case UserStatus.loaded:
+              EasyLoading.dismiss();
               context.router.push(const DashboardRoute());
               break;
 
             case UserStatus.error:
+              EasyLoading.showError("Signing failed",
+                  duration: const Duration(seconds: 5));
           }
         },
         child: SingleChildScrollView(
@@ -70,12 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: MaterialStateProperty.all(
                               const Color(0xffFB297B))),
                       onPressed: () async {
-                        EasyLoading.show(status: "Loading");
-                        // await context
-                        //     .read<FirebaseAuthCubit>()
-                        //     .signin("test2@santa.com", "987654");
-
-                        // context.router.push(const DashboardRoute());
+                        await context
+                            .read<FirebaseAuthCubit>()
+                            .signin("test2@santa.com", "987654");
                       },
                       child: const Text("LOGIN",
                           style: TextStyle(
@@ -161,3 +163,33 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+
+// class ExampleView extends StatelessWidget {
+//   const ExampleView({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ExampleViewListner(child: Container());
+//   }
+// }
+
+// class ExampleViewListner extends StatelessWidget {
+//   const ExampleViewListner({Key? key, required this.child}) : super(key: key);
+
+//   final Widget child;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return MultiBlocListener(
+//       listeners: [
+//         BlocListener<FirebaseAuthCubit, FirebaseAuthState>(
+//           listener: _firebaseAuthCubitListner,
+//         ),
+//       ],
+//       child: child,
+//     );
+//   }
+
+//   void _firebaseAuthCubitListner(
+//       BuildContext context, FirebaseAuthState state) {}
+// }
