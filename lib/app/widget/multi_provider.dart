@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
+import 'package:mysmartdesk/dashboard/logic/cubit/addnewmedicine_cubit.dart';
 
 class MultiProvider extends StatelessWidget {
   const MultiProvider({
@@ -21,7 +22,8 @@ class MultiProvider extends StatelessWidget {
         BlocProvider(create: (context) => FirebaseAuthCubit()),
         BlocProvider(
           create: (context) => AuthflowCubit(auth),
-        )
+        ),
+        BlocProvider(create: (context) => AddnewmedicineCubit()),
       ],
       child: child,
     );

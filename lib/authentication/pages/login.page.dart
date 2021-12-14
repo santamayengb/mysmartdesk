@@ -2,13 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
+import 'package:mysmartdesk/authentication/widgets/widgets.dart';
 
 import '../../router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,6 +19,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+  final emailController = TextEditingController();
+  final pwdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +64,13 @@ class _LoginPageState extends State<LoginPage> {
                   key: formkey,
                   child: Column(
                     children: [
-                      email("email"),
-                      password("password"),
+                      EmailWidget(emailController: emailController),
+                      PasswordWidget(pwdController: pwdController),
+                      IconButton(
+                          onPressed: () => context
+                              .read<FirebaseAuthCubit>()
+                              .signup(emailController.text, pwdController.text),
+                          icon: const Icon(Icons.people_outline))
                     ],
                   ),
                 ),
@@ -77,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         await context
                             .read<FirebaseAuthCubit>()
-                            .signin("test2@santa.com", "987654");
+                            .signin(emailController.text, pwdController.text);
                       },
                       child: const Text("LOGIN",
                           style: TextStyle(
@@ -86,14 +94,17 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 150),
-                  child: RichText(
-                    text: const TextSpan(
-                      children: [
-                        TextSpan(text: "click here to"),
-                        TextSpan(
-                            text: " sign up",
-                            style: TextStyle(color: kPrimaryColor))
-                      ],
+                  child: GestureDetector(
+                    onTap: () => log("message"),
+                    child: RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(text: "click here to"),
+                          TextSpan(
+                              text: " sign up",
+                              style: TextStyle(color: kPrimaryColor)),
+                        ],
+                      ),
                     ),
                   ),
                 )
@@ -104,65 +115,9 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  Widget email(String hint) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        cursorColor: kPrimaryColor,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.mail_rounded,
-            color: kPrimaryColor,
-          ),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.1),
-          hintStyle: TextStyle(color: Colors.white.withOpacity(0.2)),
-          focusedBorder: InputBorder.none,
-          hintText: hint,
-        ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "Email is required";
-          } else {
-            return null;
-          }
-        },
-      ),
-    );
-  }
-
-  Widget password(String hint) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
-      child: TextFormField(
-        keyboardType: TextInputType.visiblePassword,
-        obscureText: true,
-        cursorColor: kPrimaryColor,
-        decoration: InputDecoration(
-          prefixIcon: const Icon(
-            Icons.lock,
-            color: kPrimaryColor,
-          ),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.1),
-          hintStyle: TextStyle(color: Colors.white.withOpacity(0.2)),
-          focusedBorder: InputBorder.none,
-          hintText: hint,
-        ),
-        validator: (val) {
-          if (val!.isEmpty) {
-            log("message");
-            return "please fill password and then login";
-          } else {
-            return null;
-          }
-        },
-      ),
-    );
-  }
 }
+ 
+
 
 // class ExampleView extends StatelessWidget {
 //   const ExampleView({Key? key}) : super(key: key);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,6 +21,16 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
 
       emit(const FirebaseAuthState(status: UserStatus.loaded));
+    } catch (e) {
+      emit(const FirebaseAuthState(status: UserStatus.error));
+    }
+  }
+
+  Future<void> signup(String email, String password) async {
+    try {
+      log("signup");
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } catch (e) {
       emit(const FirebaseAuthState(status: UserStatus.error));
     }

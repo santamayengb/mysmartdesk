@@ -9,6 +9,7 @@ import 'package:mysmartdesk/dashboard/dashboard.dart';
     AutoRoute(page: SplashScreenPage),
     AutoRoute(page: DashboardPage),
     AutoRoute(page: LoginPage),
+    AutoRoute(page: SignUpPage)
   ]),
 ])
 class $AppRouter {}
