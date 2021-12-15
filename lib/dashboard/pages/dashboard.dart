@@ -3,8 +3,7 @@ import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mysmartdesk/dashboard/logic/cubit/addnewmedicine_cubit.dart';
-import 'package:mysmartdesk/dashboard/widgets/widgets.dart';
+import 'package:mysmartdesk/dashboard/logic/card/card_cubit.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -22,14 +21,12 @@ class DashboardPage extends StatelessWidget {
               icon: const Icon(Icons.person))
         ],
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: const [CardView(), CardView(), CardView(), CardView()],
-      ),
+      body: Container(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
-        onPressed: () =>
-            context.read<AddnewmedicineCubit>().addNew("test1", "test1"),
+        onPressed: () {
+          context.read<CardCubit>();
+        },
         child: const Icon(Icons.add),
       ),
     );
