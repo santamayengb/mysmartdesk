@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -9,7 +10,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   easyLoadingSetup();
-  runApp(MyApp(auth: FirebaseAuth.instance));
+  runApp(MyApp(
+    auth: FirebaseAuth.instance,
+    database: FirebaseDatabase.instance,
+  ));
 }
 
 easyLoadingSetup() {
