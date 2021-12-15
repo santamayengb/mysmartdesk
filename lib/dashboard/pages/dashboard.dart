@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
@@ -11,6 +13,9 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<CardCubit>().state;
+    final data = state.card;
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -22,10 +27,16 @@ class DashboardPage extends StatelessWidget {
               icon: const Icon(Icons.person))
         ],
       ),
-      body: Container(),
+      body: GridView.builder(
+        itemCount: data.length,
+        itemBuilder: itemBuilder,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () {
+          log(data.length.toString());
           context
               .read<CardCubit>()
               .add(CardModel(medName: "medName", time: "time"));
