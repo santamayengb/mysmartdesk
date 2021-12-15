@@ -16,7 +16,7 @@ class CardCubit extends Cubit<CardState> {
       final mapOfDocs =
           docs.map((doc) => CardModel.fromJson(doc.data())).toList();
 
-      log(mapOfDocs.toString());
+      log(mapOfDocs.length.toString());
       emit(CardState(card: [...mapOfDocs]));
     });
   }
