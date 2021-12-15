@@ -20,8 +20,6 @@ class AuthFlow extends StatelessWidget {
             return [const LoginRoute()];
           case AuthFlowStatus.initial:
             return [const SplashScreenRoute()];
-          case AuthFlowStatus.signup:
-            return [SignUpRoute()];
         }
       },
     );

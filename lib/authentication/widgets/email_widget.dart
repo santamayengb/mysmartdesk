@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
+import 'package:form_validator/form_validator.dart';
 
 class EmailWidget extends StatelessWidget {
   const EmailWidget({
@@ -28,13 +29,7 @@ class EmailWidget extends StatelessWidget {
           focusedBorder: InputBorder.none,
           hintText: "Email",
         ),
-        validator: (value) {
-          if (value!.isEmpty) {
-            return "Email is required";
-          } else {
-            return null;
-          }
-        },
+        validator: ValidationBuilder().email().maxLength(50).build(),
       ),
     );
   }

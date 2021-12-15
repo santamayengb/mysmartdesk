@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
 import 'package:mysmartdesk/authentication/widgets/widgets.dart';
@@ -19,6 +17,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  void _validate() {
+    formkey.currentState!.validate();
+  }
 
   final emailController = TextEditingController();
   final pwdController = TextEditingController();
@@ -44,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
 
             case UserStatus.error:
               EasyLoading.showError("Signing failed",
-                  duration: const Duration(seconds: 5));
+                  dismissOnTap: true, duration: const Duration(seconds: 5));
           }
         },
         child: SingleChildScrollView(
@@ -66,11 +67,6 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       EmailWidget(emailController: emailController),
                       PasswordWidget(pwdController: pwdController),
-                      IconButton(
-                          onPressed: () => context
-                              .read<FirebaseAuthCubit>()
-                              .signup(emailController.text, pwdController.text),
-                          icon: const Icon(Icons.people_outline))
                     ],
                   ),
                 ),
@@ -83,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: MaterialStateProperty.all(
                               const Color(0xffFB297B))),
                       onPressed: () async {
+                        _validate();
                         await context
                             .read<FirebaseAuthCubit>()
                             .signin(emailController.text, pwdController.text);
@@ -95,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 150),
                   child: GestureDetector(
-                    onTap: () => log("message"),
+                    onTap: () => context.router.push(SignUpRoute()),
                     child: RichText(
                       text: const TextSpan(
                         children: [

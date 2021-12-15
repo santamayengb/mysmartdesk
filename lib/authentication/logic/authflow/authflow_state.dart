@@ -1,6 +1,6 @@
 part of 'authflow_cubit.dart';
 
-enum AuthFlowStatus { initial, loggedIn, loggedOut, signup }
+enum AuthFlowStatus { initial, loggedIn, loggedOut }
 
 class AuthflowState extends Equatable {
   const AuthflowState({required this.status});

@@ -11,10 +11,10 @@
 import 'package:auto_route/auto_route.dart' as _i5;
 import 'package:flutter/material.dart' as _i6;
 
-import '../authentication/authentication.dart' as _i4;
+import '../authentication/authentication.dart' as _i2;
 import '../core/auth_flow/auth.flow.dart' as _i1;
-import '../core/splash/splash_screen.page.dart' as _i2;
-import '../dashboard/dashboard.dart' as _i3;
+import '../core/splash/splash_screen.page.dart' as _i3;
+import '../dashboard/dashboard.dart' as _i4;
 
 class AppRouter extends _i5.RootStackRouter {
   AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
@@ -26,23 +26,23 @@ class AppRouter extends _i5.RootStackRouter {
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.AuthFlow());
     },
-    SplashScreenRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i2.SplashScreenPage());
-    },
-    DashboardRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.DashboardPage());
-    },
-    LoginRoute.name: (routeData) {
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i4.LoginPage());
-    },
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i4.SignUpPage(key: args.key));
+          routeData: routeData, child: _i2.SignUpPage(key: args.key));
+    },
+    SplashScreenRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i3.SplashScreenPage());
+    },
+    DashboardRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i4.DashboardPage());
+    },
+    LoginRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i2.LoginPage());
     }
   };
 
@@ -56,10 +56,9 @@ class AppRouter extends _i5.RootStackRouter {
           _i5.RouteConfig(DashboardRoute.name,
               path: 'dashboard-page', parent: AuthFlow.name),
           _i5.RouteConfig(LoginRoute.name,
-              path: 'login-page', parent: AuthFlow.name),
-          _i5.RouteConfig(SignUpRoute.name,
-              path: 'sign-up-page', parent: AuthFlow.name)
-        ])
+              path: 'login-page', parent: AuthFlow.name)
+        ]),
+        _i5.RouteConfig(SignUpRoute.name, path: '/sign-up-page')
       ];
 }
 
@@ -73,36 +72,11 @@ class AuthFlow extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.SplashScreenPage]
-class SplashScreenRoute extends _i5.PageRouteInfo<void> {
-  const SplashScreenRoute()
-      : super(SplashScreenRoute.name, path: 'splash-screen-page');
-
-  static const String name = 'SplashScreenRoute';
-}
-
-/// generated route for
-/// [_i3.DashboardPage]
-class DashboardRoute extends _i5.PageRouteInfo<void> {
-  const DashboardRoute() : super(DashboardRoute.name, path: 'dashboard-page');
-
-  static const String name = 'DashboardRoute';
-}
-
-/// generated route for
-/// [_i4.LoginPage]
-class LoginRoute extends _i5.PageRouteInfo<void> {
-  const LoginRoute() : super(LoginRoute.name, path: 'login-page');
-
-  static const String name = 'LoginRoute';
-}
-
-/// generated route for
-/// [_i4.SignUpPage]
+/// [_i2.SignUpPage]
 class SignUpRoute extends _i5.PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({_i6.Key? key})
       : super(SignUpRoute.name,
-            path: 'sign-up-page', args: SignUpRouteArgs(key: key));
+            path: '/sign-up-page', args: SignUpRouteArgs(key: key));
 
   static const String name = 'SignUpRoute';
 }
@@ -116,4 +90,29 @@ class SignUpRouteArgs {
   String toString() {
     return 'SignUpRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [_i3.SplashScreenPage]
+class SplashScreenRoute extends _i5.PageRouteInfo<void> {
+  const SplashScreenRoute()
+      : super(SplashScreenRoute.name, path: 'splash-screen-page');
+
+  static const String name = 'SplashScreenRoute';
+}
+
+/// generated route for
+/// [_i4.DashboardPage]
+class DashboardRoute extends _i5.PageRouteInfo<void> {
+  const DashboardRoute() : super(DashboardRoute.name, path: 'dashboard-page');
+
+  static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [_i2.LoginPage]
+class LoginRoute extends _i5.PageRouteInfo<void> {
+  const LoginRoute() : super(LoginRoute.name, path: 'login-page');
+
+  static const String name = 'LoginRoute';
 }

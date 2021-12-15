@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 
 class PasswordWidget extends StatelessWidget {
@@ -29,13 +30,6 @@ class PasswordWidget extends StatelessWidget {
           focusedBorder: InputBorder.none,
           hintText: "password",
         ),
-        validator: (val) {
-          if (val!.isEmpty) {
-            return "please fill password and then login";
-          } else {
-            return null;
-          }
-        },
       ),
     );
   }
