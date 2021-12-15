@@ -18,6 +18,6 @@ class AddnewmedicineCubit extends Cubit<AddnewmedicineState> {
   final database = FirebaseDatabase.instance.ref();
 
   Future<void> addNew(String medName, String time) async {
-    database.child(medName).set("bjbj");
+    database.child(medName).push().set(time);
   }
 }
