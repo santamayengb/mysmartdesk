@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -12,7 +13,7 @@ void main() async {
   easyLoadingSetup();
   runApp(MyApp(
     auth: FirebaseAuth.instance,
-    database: FirebaseDatabase.instance,
+    firebaseFirestore: FirebaseFirestore.instance,
   ));
 }
 
@@ -24,14 +25,3 @@ easyLoadingSetup() {
     ..maskColor = Colors.black
     ..userInteractions = false;
 }
-
-// class Book {
-//   static const _instance = Book._();
-
-//   static Book get instance => _instance;
-
-//   void name() {}
-//   void santa() {}
-
-//   const Book._();
-// }
