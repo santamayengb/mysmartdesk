@@ -6,12 +6,12 @@ part of 'card.model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Card _$CardFromJson(Map<String, dynamic> json) => Card(
+CardModel _$CardFromJson(Map<String, dynamic> json) => CardModel(
       medName: json['medName'] as String,
       time: json['time'] as String,
     );
 
-Map<String, dynamic> _$CardToJson(Card instance) => <String, dynamic>{
+Map<String, dynamic> _$CardToJson(CardModel instance) => <String, dynamic>{
       'medName': instance.medName,
       'time': instance.time,
     };

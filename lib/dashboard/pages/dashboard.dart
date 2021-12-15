@@ -3,6 +3,7 @@ import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mysmartdesk/dashboard/data/model/card.model.dart';
 import 'package:mysmartdesk/dashboard/logic/card/card_cubit.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -25,7 +26,9 @@ class DashboardPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () {
-          context.read<CardCubit>();
+          context
+              .read<CardCubit>()
+              .add(CardModel(medName: "medName", time: "time"));
         },
         child: const Icon(Icons.add),
       ),
