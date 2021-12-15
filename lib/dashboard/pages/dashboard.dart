@@ -29,7 +29,7 @@ class DashboardPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () =>
-            context.read<AddnewmedicineCubit>().addNew("asdasd", "sadasd"),
+            context.read<AddnewmedicineCubit>().addNew("test1", "test1"),
         child: const Icon(Icons.add),
       ),
     );
