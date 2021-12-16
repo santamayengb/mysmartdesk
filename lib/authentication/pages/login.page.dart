@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
 
             case UserStatus.loaded:
               EasyLoading.dismiss();
-              context.router.push(const DashboardRoute());
+              context.router.push(DashboardRoute());
               break;
 
             case UserStatus.error:

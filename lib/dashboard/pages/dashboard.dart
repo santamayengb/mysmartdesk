@@ -3,14 +3,15 @@ import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mysmartdesk/authentication/widgets/widgets.dart';
-// import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
 import 'package:mysmartdesk/dashboard/data/model/card.model.dart';
+
 import 'package:mysmartdesk/dashboard/logic/card/card_cubit.dart';
 import 'package:mysmartdesk/dashboard/widgets/medname_widget.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+  DashboardPage({Key? key}) : super(key: key);
+
+  final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class DashboardPage extends StatelessWidget {
           final d = data[index];
 
           return ListTile(
-            title: Text(d.medName + " ${d.id}"),
+            title: Text(d.medName),
             subtitle: Text(d.time),
             onLongPress: () => context.read<CardCubit>().delete(d),
           );
@@ -55,8 +56,15 @@ class DashboardPage extends StatelessWidget {
                     color: kPrimaryColor,
                     child: Column(
                       children: [
-                        const MedNameWidget(),
-                        TextButton(onPressed: () {}, child: const Text("Okay"))
+                        MedNameWidget(
+                          nameController: nameController,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              context.read<CardCubit>().add(CardModel(
+                                  medName: nameController.text, time: "time"));
+                            },
+                            child: const Text("Okay"))
                       ],
                     ),
                   ),

@@ -42,8 +42,7 @@ class SignUpPage extends StatelessWidget {
                         context
                             .read<FirebaseAuthCubit>()
                             .signup(_emailController.text, _pwdController.text)
-                            .whenComplete(() =>
-                                context.router.navigate(const AuthFlow()));
+                            .whenComplete(() => context.navigateBack());
                       },
                       child: const Text("SIGN UP",
                           style: TextStyle(
