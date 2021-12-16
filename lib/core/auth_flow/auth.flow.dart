@@ -15,7 +15,6 @@ class AuthFlow extends StatelessWidget {
         switch (authFlowCubit.state.status) {
           case AuthFlowStatus.loggedIn:
             return [const DashboardRoute()];
-
           case AuthFlowStatus.loggedOut:
             return [const LoginRoute()];
           case AuthFlowStatus.initial:

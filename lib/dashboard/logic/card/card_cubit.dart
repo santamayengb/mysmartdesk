@@ -10,20 +10,33 @@ part 'card_state.dart';
 class CardCubit extends Cubit<CardState> {
   CardCubit(FirebaseFirestore firebaseFirestore)
       : super(const CardState(card: [])) {
-    _firebaseFirestore = firebaseFirestore;
-    firebaseFirestore.collection("cards").snapshots().listen((event) {
+    // _firebaseFirestore = firebaseFirestore;
+    cardCollection = firebaseFirestore.collection("cards");
+    cardCollection.snapshots().listen((event) {
       final docs = event.docs;
-      final mapOfDocs =
-          docs.map((doc) => CardModel.fromJson(doc.data())).toList();
+      final mapOfDocs = docs.map((doc) {
+        final id = doc.id;
+
+        final cardMap = {
+          ...doc.data(),
+          "id": id,
+        };
+        return CardModel.fromJson(cardMap);
+      }).toList();
 
       log(mapOfDocs.length.toString());
       emit(CardState(card: [...mapOfDocs]));
     });
   }
 
-  late final FirebaseFirestore _firebaseFirestore;
+  late final CollectionReference<Map<String, dynamic>> cardCollection;
+  // late final FirebaseFirestore _firebaseFirestore;
 
   Future<void> add(CardModel card) async {
-    _firebaseFirestore.collection("cards").add(card.toJson());
+    cardCollection.add(card.toJson());
+  }
+
+  Future<void> delete(CardModel card) async {
+    await cardCollection.doc(card.id).delete();
   }
 }
