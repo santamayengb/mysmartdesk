@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
-import 'package:mysmartdesk/authentication/widgets/widgets.dart';
+import 'package:mysmartdesk/authentication/widgets/login_form.widget.dart';
 
 import '../../router/router.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +16,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  _validate() {
-    formkey.currentState!.validate();
-  }
-
   final emailController = TextEditingController();
   final pwdController = TextEditingController();
 
@@ -61,34 +56,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: SvgPicture.asset('assets/images/logo.svg'),
                   ),
                 ),
-                Form(
-                  key: formkey,
-                  child: Column(
-                    children: [
-                      EmailWidget(emailController: emailController),
-                      PasswordWidget(pwdController: pwdController),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                      style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(horizontal: 50)),
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color(0xffFB297B))),
-                      onPressed: () async {
-                        _validate();
-                        await context
-                            .read<FirebaseAuthCubit>()
-                            .signin(emailController.text, pwdController.text);
-                      },
-                      child: const Text("LOGIN",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ))),
-                ),
+                LoginFormWidget(
+                    emailController: emailController,
+                    pwdController: pwdController),
                 Padding(
                   padding: const EdgeInsets.only(top: 150),
                   child: GestureDetector(
@@ -113,7 +83,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
- 
 
 
 // class ExampleView extends StatelessWidget {

@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
-import 'package:mysmartdesk/router/app_router.gr.dart';
-import '../widgets/widgets.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mysmartdesk/authentication/widgets/signup_form.widget.dart';
 
 class SignUpPage extends StatelessWidget {
-  SignUpPage({Key? key}) : super(key: key);
-
-  final _emailController = TextEditingController();
-  final _pwdController = TextEditingController();
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,36 +16,15 @@ class SignUpPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 81,
+                  child: SvgPicture.asset('assets/images/logo.svg'),
+                ),
                 Text(
                   "Create an account",
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                EmailWidget(
-                  emailController: _emailController,
-                ),
-                PasswordWidget(pwdController: _pwdController),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextButton(
-                      style: ButtonStyle(
-                          padding: MaterialStateProperty.all(
-                              const EdgeInsets.symmetric(horizontal: 50)),
-                          backgroundColor: MaterialStateProperty.all(
-                              const Color(0xffFB297B))),
-                      onPressed: () async {
-                        context
-                            .read<FirebaseAuthCubit>()
-                            .signup(_emailController.text, _pwdController.text)
-                            .whenComplete(() => context.navigateBack());
-                      },
-                      child: const Text("SIGN UP",
-                          style: TextStyle(
-                            color: Colors.white,
-                          ))),
-                ),
-                IconButton(
-                    onPressed: () => context.router.navigate(const AuthFlow()),
-                    icon: const Icon(Icons.ac_unit_outlined))
+                SignupFormWidget()
               ],
             ),
           ),
