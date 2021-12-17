@@ -29,7 +29,7 @@ class SignUpPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
-                SignupFormWidget(),
+                const SignupFormWidget(),
                 Padding(
                   padding: const EdgeInsets.only(top: 110),
                   child: GestureDetector(

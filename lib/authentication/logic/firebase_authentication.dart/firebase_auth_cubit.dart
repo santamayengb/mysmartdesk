@@ -28,7 +28,6 @@ class FirebaseAuthCubit extends Cubit<FirebaseAuthState> {
 
   Future<void> signup(String email, String password) async {
     try {
-      log("signup");
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {

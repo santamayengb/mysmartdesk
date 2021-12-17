@@ -1,16 +1,24 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
 
-class SignupFormWidget extends StatelessWidget {
-  SignupFormWidget({Key? key}) : super(key: key);
+class SignupFormWidget extends StatefulWidget {
+  const SignupFormWidget({Key? key}) : super(key: key);
 
-  final formKey = GlobalKey<FormState>();
+  @override
+  State<SignupFormWidget> createState() => _SignupFormWidgetState();
+}
+
+class _SignupFormWidgetState extends State<SignupFormWidget> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
+
   final _pwdController = TextEditingController();
+
   final _confirmPwdController = TextEditingController();
 
   @override
@@ -36,7 +44,11 @@ class SignupFormWidget extends StatelessWidget {
                   focusedBorder: InputBorder.none,
                   hintText: "Email",
                 ),
-                validator: _emailValidate,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Email Required";
+                  }
+                },
               ),
             ),
             Padding(
@@ -56,7 +68,11 @@ class SignupFormWidget extends StatelessWidget {
                   focusedBorder: InputBorder.none,
                   hintText: "password",
                 ),
-                validator: _pwdValidate,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Password required";
+                  }
+                },
               ),
             ),
             Padding(
@@ -77,7 +93,13 @@ class SignupFormWidget extends StatelessWidget {
                   focusedBorder: InputBorder.none,
                   hintText: "Confirm password",
                 ),
-                validator: _cnfPwdValidate,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Confirm password is required";
+                  } else if (value != _pwdController.text) {
+                    return "Password mismatch";
+                  }
+                },
               ),
             ),
             Padding(
@@ -89,8 +111,12 @@ class SignupFormWidget extends StatelessWidget {
                     backgroundColor:
                         MaterialStateProperty.all(const Color(0xffFB297B))),
                 onPressed: () {
-                  final d = formKey.currentState?.validate();
-                  log(d.toString());
+                  final isValid = formKey.currentState?.validate();
+                  if (isValid == true) {
+                    context
+                        .read<FirebaseAuthCubit>()
+                        .signup(_emailController.text, _pwdController.text);
+                  }
                 },
                 child: const Text(
                   "SIGN UP",
@@ -102,24 +128,5 @@ class SignupFormWidget extends StatelessWidget {
             )
           ],
         ));
-  }
-
-  String? _emailValidate(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Email is required";
-    }
-  }
-
-  String? _pwdValidate(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Passowrd required";
-    }
-    return value;
-  }
-
-  String? _cnfPwdValidate(String? value) {
-    if (value == _pwdValidate.toString()) {
-      log(_pwdValidate.toString());
-    }
   }
 }
