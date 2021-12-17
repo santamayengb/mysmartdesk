@@ -19,7 +19,7 @@ class LoginFormWidget extends StatefulWidget {
 }
 
 class _LoginFormWidgetState extends State<LoginFormWidget> {
-  final GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  final formkey = GlobalKey<FormState>();
 
   // bool _validate() {
   //   return formkey.currentState!.validate();
@@ -78,16 +78,19 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30),
             child: TextButton(
-                style: ButtonStyle(
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(horizontal: 50)),
-                    backgroundColor:
-                        MaterialStateProperty.all(const Color(0xffFB297B))),
-                onPressed: () => _onPressLoginButton(context),
-                child: const Text("LOGIN",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ))),
+              style: ButtonStyle(
+                  padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(horizontal: 50)),
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xffFB297B))),
+              onPressed: () => _onPressLoginButton(context),
+              child: const Text(
+                "LOGIN",
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
         ],
       ),

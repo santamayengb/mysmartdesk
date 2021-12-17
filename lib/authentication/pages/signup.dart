@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/widgets/signup_form.widget.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -17,14 +19,33 @@ class SignUpPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 81,
+                  height: 80,
                   child: SvgPicture.asset('assets/images/logo.svg'),
                 ),
-                Text(
-                  "Create an account",
-                  style: Theme.of(context).textTheme.headline5,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 25),
+                  child: Text(
+                    "Create an account",
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                 ),
-                SignupFormWidget()
+                SignupFormWidget(),
+                Padding(
+                  padding: const EdgeInsets.only(top: 110),
+                  child: GestureDetector(
+                    onTap: () => context.navigateBack(),
+                    child: RichText(
+                      text: const TextSpan(
+                        children: [
+                          TextSpan(text: "Already have an account"),
+                          TextSpan(
+                              text: " Click here",
+                              style: TextStyle(color: kPrimaryColor)),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
