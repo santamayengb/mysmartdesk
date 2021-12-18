@@ -76,7 +76,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextFormField(5
+              child: TextFormField(
                 autofocus: cndPwdFocus,
                 obscureText: true,
                 controller: _confirmPwdController,
