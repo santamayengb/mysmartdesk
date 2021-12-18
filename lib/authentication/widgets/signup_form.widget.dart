@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
+import 'package:auto_route/auto_route.dart';
 
 class SignupFormWidget extends StatefulWidget {
   const SignupFormWidget({Key? key}) : super(key: key);
@@ -21,6 +20,10 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
 
   final _confirmPwdController = TextEditingController();
 
+  final bool emailFocus = false;
+  final bool pwdFocus = false;
+  final bool cndPwdFocus = false;
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -30,6 +33,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                autofocus: emailFocus,
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 cursorColor: kPrimaryColor,
@@ -44,16 +48,14 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   focusedBorder: InputBorder.none,
                   hintText: "Email",
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Email Required";
-                  }
-                },
+                validator: _emailValidator,
+                onChanged: (value) => emailFocus == true,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                autofocus: pwdFocus,
                 controller: _pwdController,
                 cursorColor: kPrimaryColor,
                 keyboardType: TextInputType.emailAddress,
@@ -68,16 +70,14 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   focusedBorder: InputBorder.none,
                   hintText: "password",
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Password required";
-                  }
-                },
+                validator: _pwdValidator,
+                onChanged: (value) => pwdFocus == true,
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
+              child: TextFormField(5
+                autofocus: cndPwdFocus,
                 obscureText: true,
                 controller: _confirmPwdController,
                 cursorColor: kPrimaryColor,
@@ -93,12 +93,11 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   focusedBorder: InputBorder.none,
                   hintText: "Confirm password",
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return "Confirm password is required";
-                  } else if (value != _pwdController.text) {
-                    return "Password mismatch";
-                  }
+                validator: _cnfPwdValidator,
+                onTap: () {
+                  setState(() {
+                    cndPwdFocus == true;
+                  });
                 },
               ),
             ),
@@ -115,7 +114,8 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   if (isValid == true) {
                     context
                         .read<FirebaseAuthCubit>()
-                        .signup(_emailController.text, _pwdController.text);
+                        .signup(_emailController.text, _pwdController.text)
+                        .whenComplete(() => context.navigateBack());
                   }
                 },
                 child: const Text(
@@ -128,5 +128,25 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
             )
           ],
         ));
+  }
+
+  String? _emailValidator(value) {
+    if (value == null || value.isEmpty) {
+      return "Email Required";
+    }
+  }
+
+  String? _pwdValidator(value) {
+    if (value == null || value.isEmpty) {
+      return "Password required";
+    }
+  }
+
+  String? _cnfPwdValidator(value) {
+    if (value == null || value.isEmpty) {
+      return "Confirm password is required";
+    } else if (value != _pwdController.text) {
+      return "Password mismatch";
+    }
   }
 }
