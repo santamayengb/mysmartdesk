@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
+import 'package:mysmartdesk/authentication/logic/saveUser/saveuser_cubit.dart';
 import 'package:mysmartdesk/dashboard/logic/card/card_cubit.dart';
 
 class MultiProvider extends StatelessWidget {
@@ -29,6 +30,9 @@ class MultiProvider extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CardCubit(firebaseFirestore),
+        ),
+        BlocProvider(
+          create: (context) => SaveuserCubit(),
         )
       ],
       child: child,

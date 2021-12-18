@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
 import 'package:mysmartdesk/authentication/widgets/login_form.widget.dart';
@@ -18,6 +21,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final pwdController = TextEditingController();
+
+  final userData = FirebaseFirestore.instance.collection('/user');
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +64,12 @@ class _LoginPageState extends State<LoginPage> {
                 LoginFormWidget(
                     emailController: emailController,
                     pwdController: pwdController),
+                TextButton(
+                    onPressed: () async {
+                      userData.get().then(
+                          (value) => value.docs.map((e) => log(e['type'])));
+                    },
+                    child: const Text("data")),
                 Padding(
                   padding: const EdgeInsets.only(top: 150),
                   child: GestureDetector(

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:mysmartdesk/authentication/logic/saveUser/saveuser_cubit.dart';
 
 class SignupFormWidget extends StatefulWidget {
   const SignupFormWidget({Key? key}) : super(key: key);
@@ -13,6 +16,9 @@ class SignupFormWidget extends StatefulWidget {
 
 class _SignupFormWidgetState extends State<SignupFormWidget> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final emailState = GlobalKey<FormFieldState>();
+  final passwordState = GlobalKey<FormFieldState>();
+  final cPasswordState = GlobalKey<FormFieldState>();
 
   final _emailController = TextEditingController();
 
@@ -24,16 +30,23 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
   final bool pwdFocus = false;
   final bool cndPwdFocus = false;
 
+  String pwd = "";
+  bool checkBoxValue = false;
+
+  List<String> usertype = ["Admin", "User"];
+  String dropdownValue = "User";
+
   @override
   Widget build(BuildContext context) {
     return Form(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         key: formKey,
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                autofocus: emailFocus,
+                key: emailState,
                 controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
                 cursorColor: kPrimaryColor,
@@ -49,13 +62,15 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   hintText: "Email",
                 ),
                 validator: _emailValidator,
-                onChanged: (value) => emailFocus == true,
+                onChanged: (value) => setState(() {
+                  value = pwd;
+                }),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                autofocus: pwdFocus,
+                key: passwordState,
                 controller: _pwdController,
                 cursorColor: kPrimaryColor,
                 keyboardType: TextInputType.emailAddress,
@@ -71,13 +86,18 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   hintText: "password",
                 ),
                 validator: _pwdValidator,
-                onChanged: (value) => pwdFocus == true,
+                onChanged: (value) {
+                  setState(() {
+                    pwd = value;
+                    log(value);
+                  });
+                },
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
-                autofocus: cndPwdFocus,
+                key: cPasswordState,
                 obscureText: true,
                 controller: _confirmPwdController,
                 cursorColor: kPrimaryColor,
@@ -94,12 +114,22 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   hintText: "Confirm password",
                 ),
                 validator: _cnfPwdValidator,
-                onTap: () {
-                  setState(() {
-                    cndPwdFocus == true;
-                  });
-                },
               ),
+            ),
+            DropdownButton<String>(
+              dropdownColor: kPrimaryColor,
+              isDense: true,
+              value: dropdownValue,
+              items: usertype.map((item) {
+                return DropdownMenuItem(
+                  child: Text(item),
+                  value: item,
+                );
+              }).toList(),
+              onChanged: (value) => setState(() {
+                // dropdownValue = value!;
+                dropdownValue = value!;
+              }),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30),
@@ -117,6 +147,29 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                         .signup(_emailController.text, _pwdController.text)
                         .whenComplete(() => context.navigateBack());
                   }
+
+                  Map<String, dynamic> userdata = {};
+
+                  if (emailState.currentState?.validate() ?? false) {
+                    emailState.currentState?.save();
+                    final emailValue = emailState.currentState?.value;
+                    userdata["email"] = emailValue;
+                  }
+
+                  if (passwordState.currentState?.validate() ?? false) {
+                    passwordState.currentState?.save();
+                    userdata["password"] = passwordState.currentState?.value;
+                  }
+
+                  if (cPasswordState.currentState?.validate() ?? false) {
+                    cPasswordState.currentState?.save();
+                    userdata["password"] = cPasswordState.currentState?.value;
+                  }
+                  if (dropdownValue.isNotEmpty) {
+                    userdata["type"] = dropdownValue;
+                  }
+
+                  context.read<SaveuserCubit>().saveUser(userdata);
                 },
                 child: const Text(
                   "SIGN UP",
@@ -125,7 +178,7 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ));
   }
@@ -137,15 +190,23 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
   }
 
   String? _pwdValidator(value) {
+    int pwdLength = value.toString().length;
     if (value == null || value.isEmpty) {
       return "Password required";
+    } else if (pwdLength < 6) {
+      return "Mininum lenght should have 6";
     }
   }
 
   String? _cnfPwdValidator(value) {
+    passwordState.currentState?.validate();
+    passwordState.currentState?.save();
+
+    final pass = passwordState.currentState?.value;
+
     if (value == null || value.isEmpty) {
       return "Confirm password is required";
-    } else if (value != _pwdController.text) {
+    } else if (value != pass) {
       return "Password mismatch";
     }
   }
