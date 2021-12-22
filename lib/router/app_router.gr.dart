@@ -14,7 +14,7 @@ import 'package:flutter/material.dart' as _i6;
 import '../authentication/authentication.dart' as _i2;
 import '../core/auth_flow/auth.flow.dart' as _i1;
 import '../core/splash/splash_screen.page.dart' as _i3;
-import '../dashboard/dashboard.dart' as _i4;
+import '../dashboard/pages/pages.dart' as _i4;
 
 class AppRouter extends _i5.RootStackRouter {
   AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
@@ -34,15 +34,21 @@ class AppRouter extends _i5.RootStackRouter {
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i3.SplashScreenPage());
     },
-    DashboardRoute.name: (routeData) {
-      final args = routeData.argsAs<DashboardRouteArgs>(
-          orElse: () => const DashboardRouteArgs());
-      return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i4.DashboardPage(key: args.key));
-    },
     LoginRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.LoginPage());
+    },
+    DashboardRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i4.DashboardPage());
+    },
+    AdminDashboardRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i4.AdminDashboardPage());
+    },
+    UserDashboardRoute.name: (routeData) {
+      return _i5.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i4.UserDashboardPage());
     }
   };
 
@@ -53,10 +59,17 @@ class AppRouter extends _i5.RootStackRouter {
         _i5.RouteConfig(AuthFlow.name, path: '/login', children: [
           _i5.RouteConfig(SplashScreenRoute.name,
               path: 'splash-screen-page', parent: AuthFlow.name),
-          _i5.RouteConfig(DashboardRoute.name,
-              path: 'dashboard-page', parent: AuthFlow.name),
           _i5.RouteConfig(LoginRoute.name,
-              path: 'login-page', parent: AuthFlow.name)
+              path: 'login-page', parent: AuthFlow.name),
+          _i5.RouteConfig(DashboardRoute.name,
+              path: 'dashboard-page',
+              parent: AuthFlow.name,
+              children: [
+                _i5.RouteConfig(AdminDashboardRoute.name,
+                    path: 'admin-dashboard-page', parent: DashboardRoute.name),
+                _i5.RouteConfig(UserDashboardRoute.name,
+                    path: 'user-dashboard-page', parent: DashboardRoute.name)
+              ])
         ]),
         _i5.RouteConfig(SignUpRoute.name, path: '/sign-up-page')
       ];
@@ -89,30 +102,37 @@ class SplashScreenRoute extends _i5.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i4.DashboardPage]
-class DashboardRoute extends _i5.PageRouteInfo<DashboardRouteArgs> {
-  DashboardRoute({_i6.Key? key})
-      : super(DashboardRoute.name,
-            path: 'dashboard-page', args: DashboardRouteArgs(key: key));
-
-  static const String name = 'DashboardRoute';
-}
-
-class DashboardRouteArgs {
-  const DashboardRouteArgs({this.key});
-
-  final _i6.Key? key;
-
-  @override
-  String toString() {
-    return 'DashboardRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
 /// [_i2.LoginPage]
 class LoginRoute extends _i5.PageRouteInfo<void> {
   const LoginRoute() : super(LoginRoute.name, path: 'login-page');
 
   static const String name = 'LoginRoute';
+}
+
+/// generated route for
+/// [_i4.DashboardPage]
+class DashboardRoute extends _i5.PageRouteInfo<void> {
+  const DashboardRoute({List<_i5.PageRouteInfo>? children})
+      : super(DashboardRoute.name,
+            path: 'dashboard-page', initialChildren: children);
+
+  static const String name = 'DashboardRoute';
+}
+
+/// generated route for
+/// [_i4.AdminDashboardPage]
+class AdminDashboardRoute extends _i5.PageRouteInfo<void> {
+  const AdminDashboardRoute()
+      : super(AdminDashboardRoute.name, path: 'admin-dashboard-page');
+
+  static const String name = 'AdminDashboardRoute';
+}
+
+/// generated route for
+/// [_i4.UserDashboardPage]
+class UserDashboardRoute extends _i5.PageRouteInfo<void> {
+  const UserDashboardRoute()
+      : super(UserDashboardRoute.name, path: 'user-dashboard-page');
+
+  static const String name = 'UserDashboardRoute';
 }
