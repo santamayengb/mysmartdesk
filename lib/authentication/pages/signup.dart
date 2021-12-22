@@ -31,7 +31,7 @@ class SignUpPage extends StatelessWidget {
                 ),
                 const SignupFormWidget(),
                 Padding(
-                  padding: const EdgeInsets.only(top: 110),
+                  padding: const EdgeInsets.only(top: 90),
                   child: GestureDetector(
                     onTap: () => context.navigateBack(),
                     child: RichText(

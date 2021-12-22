@@ -116,20 +116,25 @@ class _SignupFormWidgetState extends State<SignupFormWidget> {
                 validator: _cnfPwdValidator,
               ),
             ),
-            DropdownButton<String>(
-              dropdownColor: kPrimaryColor,
-              isDense: true,
-              value: dropdownValue,
-              items: usertype.map((item) {
-                return DropdownMenuItem(
-                  child: Text(item),
-                  value: item,
-                );
-              }).toList(),
-              onChanged: (value) => setState(() {
-                // dropdownValue = value!;
-                dropdownValue = value!;
-              }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text("Select user type"),
+                DropdownButton<String>(
+                  dropdownColor: kPrimaryColor,
+                  value: dropdownValue,
+                  items: usertype.map((item) {
+                    return DropdownMenuItem(
+                      child: Text(item),
+                      value: item,
+                    );
+                  }).toList(),
+                  onChanged: (value) => setState(() {
+                    // dropdownValue = value!;
+                    dropdownValue = value!;
+                  }),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 30),

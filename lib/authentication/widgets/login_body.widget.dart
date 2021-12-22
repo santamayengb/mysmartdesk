@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/router/router.dart';
 
 import 'login_form.widget.dart';
@@ -16,8 +17,6 @@ class LoginBody extends StatelessWidget {
   final TextEditingController emailController;
   final TextEditingController pwdController;
   final CollectionReference<Map<String, dynamic>> userData;
-
-  get kPrimaryColor => null;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +40,9 @@ class LoginBody extends StatelessWidget {
               child: GestureDetector(
                 onTap: () => context.router.push(const SignUpRoute()),
                 child: RichText(
-                  text: TextSpan(
+                  text: const TextSpan(
                     children: [
-                      const TextSpan(text: "click here to"),
+                      TextSpan(text: "click here to"),
                       TextSpan(
                           text: " sign up",
                           style: TextStyle(color: kPrimaryColor)),
