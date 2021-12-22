@@ -3,12 +3,11 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/authentication/logic/firebase_authentication.dart/firebase_auth_cubit.dart';
-import 'package:mysmartdesk/authentication/widgets/login_form.widget.dart';
+import 'package:mysmartdesk/authentication/widgets/login_body.widget.dart';
 
 import '../../router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginPage extends StatefulWidget {
@@ -48,48 +47,10 @@ class _LoginPageState extends State<LoginPage> {
                   dismissOnTap: true, duration: const Duration(seconds: 5));
           }
         },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 100),
-                  child: SizedBox(
-                    height: 81,
-                    child: SvgPicture.asset('assets/images/logo.svg'),
-                  ),
-                ),
-                LoginFormWidget(
-                    emailController: emailController,
-                    pwdController: pwdController),
-                TextButton(
-                    onPressed: () async {
-                      userData.get().then(
-                          (value) => value.docs.map((e) => log(e['type'])));
-                    },
-                    child: const Text("data")),
-                Padding(
-                  padding: const EdgeInsets.only(top: 150),
-                  child: GestureDetector(
-                    onTap: () => context.router.push(SignUpRoute()),
-                    child: RichText(
-                      text: const TextSpan(
-                        children: [
-                          TextSpan(text: "click here to"),
-                          TextSpan(
-                              text: " sign up",
-                              style: TextStyle(color: kPrimaryColor)),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
+        child: LoginBody(
+            emailController: emailController,
+            pwdController: pwdController,
+            userData: userData),
       ),
     );
   }

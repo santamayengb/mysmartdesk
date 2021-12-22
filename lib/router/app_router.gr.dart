@@ -27,10 +27,8 @@ class AppRouter extends _i5.RootStackRouter {
           routeData: routeData, child: const _i1.AuthFlow());
     },
     SignUpRoute.name: (routeData) {
-      final args = routeData.argsAs<SignUpRouteArgs>(
-          orElse: () => const SignUpRouteArgs());
       return _i5.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i2.SignUpPage(key: args.key));
+          routeData: routeData, child: const _i2.SignUpPage());
     },
     SplashScreenRoute.name: (routeData) {
       return _i5.MaterialPageX<dynamic>(
@@ -75,23 +73,10 @@ class AuthFlow extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.SignUpPage]
-class SignUpRoute extends _i5.PageRouteInfo<SignUpRouteArgs> {
-  SignUpRoute({_i6.Key? key})
-      : super(SignUpRoute.name,
-            path: '/sign-up-page', args: SignUpRouteArgs(key: key));
+class SignUpRoute extends _i5.PageRouteInfo<void> {
+  const SignUpRoute() : super(SignUpRoute.name, path: '/sign-up-page');
 
   static const String name = 'SignUpRoute';
-}
-
-class SignUpRouteArgs {
-  const SignUpRouteArgs({this.key});
-
-  final _i6.Key? key;
-
-  @override
-  String toString() {
-    return 'SignUpRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for
