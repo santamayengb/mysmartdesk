@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:mysmartdesk/PhoneAuth/pages/phone_auth.page.dart';
 import 'package:mysmartdesk/authentication/authentication.dart';
 import 'package:mysmartdesk/core/auth_flow/auth.flow.dart';
 import 'package:mysmartdesk/core/splash/splash_screen.page.dart';
@@ -16,5 +17,6 @@ import 'package:mysmartdesk/dashboard/dashboard.dart';
     ],
   ),
   AutoRoute(page: SignUpPage),
+  AutoRoute(page: PhoneAuthPage)
 ])
 class $AppRouter {}
