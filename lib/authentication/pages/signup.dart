@@ -30,6 +30,25 @@ class SignUpPage extends StatelessWidget {
                   ),
                 ),
                 const SignupFormWidget(),
+                TextButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(kPrimaryColor),
+                    ),
+                    onPressed: () {},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.send_to_mobile,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "Sign up with Phone Number",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      ],
+                    )),
                 Padding(
                   padding: const EdgeInsets.only(top: 110),
                   child: GestureDetector(
