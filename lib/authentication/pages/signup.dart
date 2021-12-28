@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/widgets/signup_form.widget.dart';
+import 'package:mysmartdesk/router/app_router.gr.dart';
 import 'package:mysmartdesk/router/router.dart';
 
 class SignUpPage extends StatelessWidget {
