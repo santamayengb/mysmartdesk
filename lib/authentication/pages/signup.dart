@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/widgets/signup_form.widget.dart';
+import 'package:mysmartdesk/router/router.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -35,7 +36,9 @@ class SignUpPage extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all<Color>(kPrimaryColor),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      context.navigateTo(const PhoneAuthRoute());
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
