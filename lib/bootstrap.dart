@@ -37,6 +37,8 @@ Future<void> bootstrap({required BootStrapBuilder builder}) async {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
+  await Firebase.initializeApp();
+  easyLoadingSetup();
   final _appRouter = AppRouter();
   final auth = FirebaseAuth.instance;
   final fireStore = FirebaseFirestore.instance;
@@ -47,8 +49,6 @@ Future<void> bootstrap({required BootStrapBuilder builder}) async {
         () async => runApp(await builder(_appRouter, auth, fireStore)),
         blocObserver: AppBlocObserver(),
       );
-      await Firebase.initializeApp();
-      easyLoadingSetup();
     },
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );

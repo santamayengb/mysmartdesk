@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:mysmartdesk/core/lottie/assets.dart';
 import 'package:mysmartdesk/router/app_router.gr.dart';
 import 'package:mysmartdesk/router/router.dart';
 
@@ -32,7 +33,7 @@ class LoginBody extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 100),
               child: SizedBox(
                 height: 81,
-                child: SvgPicture.asset('assets/images/logo.svg'),
+                child: SvgPicture.asset(Assets.image.logoSvg),
               ),
             ),
             LoginFormWidget(

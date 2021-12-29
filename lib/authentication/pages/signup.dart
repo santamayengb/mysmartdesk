@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/widgets/signup_form.widget.dart';
+import 'package:mysmartdesk/core/lottie/assets.dart';
 import 'package:mysmartdesk/router/app_router.gr.dart';
 import 'package:mysmartdesk/router/router.dart';
 
@@ -21,7 +22,7 @@ class SignUpPage extends StatelessWidget {
               children: [
                 SizedBox(
                   height: 80,
-                  child: SvgPicture.asset('assets/images/logo.svg'),
+                  child: SvgPicture.asset(Assets.image.logoSvg),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 25),
@@ -55,7 +56,7 @@ class SignUpPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 110),
                   child: GestureDetector(
-                    onTap: () => context.navigateBack(),
+                    onTap: () => context.router.push(const AuthFlow()),
                     child: RichText(
                       text: const TextSpan(
                         children: [
