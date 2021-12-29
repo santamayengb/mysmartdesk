@@ -33,8 +33,10 @@ class AppRouter extends _i7.RootStackRouter {
           routeData: routeData, child: const _i2.SignUpPage());
     },
     PhoneAuthRoute.name: (routeData) {
+      final args = routeData.argsAs<PhoneAuthRouteArgs>(
+          orElse: () => const PhoneAuthRouteArgs());
       return _i7.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i3.PhoneAuthPage());
+          routeData: routeData, child: _i3.PhoneAuthPage(key: args.key));
     },
     OtpVerificationRoute.name: (routeData) {
       final args = routeData.argsAs<OtpVerificationRouteArgs>();
@@ -96,10 +98,23 @@ class SignUpRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.PhoneAuthPage]
-class PhoneAuthRoute extends _i7.PageRouteInfo<void> {
-  const PhoneAuthRoute() : super(PhoneAuthRoute.name, path: '/phone-auth-page');
+class PhoneAuthRoute extends _i7.PageRouteInfo<PhoneAuthRouteArgs> {
+  PhoneAuthRoute({_i8.Key? key})
+      : super(PhoneAuthRoute.name,
+            path: '/phone-auth-page', args: PhoneAuthRouteArgs(key: key));
 
   static const String name = 'PhoneAuthRoute';
+}
+
+class PhoneAuthRouteArgs {
+  const PhoneAuthRouteArgs({this.key});
+
+  final _i8.Key? key;
+
+  @override
+  String toString() {
+    return 'PhoneAuthRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

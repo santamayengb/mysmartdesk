@@ -1,17 +1,56 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mysmartdesk/authentication/data/constant/kcolor.dart';
 import 'package:mysmartdesk/authentication/logic/authflow/authflow_cubit.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mysmartdesk/dashboard/data/model/card.model.dart';
 
 import 'package:mysmartdesk/dashboard/logic/card/card_cubit.dart';
 import 'package:mysmartdesk/dashboard/widgets/medname_widget.dart';
 
-class DashboardPage extends StatelessWidget {
-  DashboardPage({Key? key}) : super(key: key);
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({Key? key}) : super(key: key);
 
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
   final nameController = TextEditingController();
+
+  String data = "";
+
+  checkForIntialMessage() async {
+    RemoteMessage? initailMsg =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initailMsg != null) {}
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseMessaging.instance.getInitialMessage();
+    checkForIntialMessage();
+    FirebaseMessaging.onMessage.listen((msg) {
+      if (msg.notification != null) {
+        log(msg.notification!.body.toString());
+        setState(() {
+          data = msg.notification!.body.toString();
+        });
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((_msg) {
+      String msg = _msg.data["route"];
+
+      switch (msg) {
+        case "Extra":
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

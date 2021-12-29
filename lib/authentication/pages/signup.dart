@@ -38,7 +38,7 @@ class SignUpPage extends StatelessWidget {
                           MaterialStateProperty.all<Color>(kPrimaryColor),
                     ),
                     onPressed: () {
-                      context.navigateTo(const PhoneAuthRoute());
+                      context.navigateTo(PhoneAuthRoute());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

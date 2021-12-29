@@ -80,7 +80,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             child: TextButton(
               onLongPress: () => context
                   .read<FirebaseAuthCubit>()
-                  .signin("test@test.com", "123456789"),
+                  .signin("Test@test.com", "123456789"),
               style: ButtonStyle(
                   padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(horizontal: 50)),
